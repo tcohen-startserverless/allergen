@@ -1,0 +1,111 @@
+---
+import { hc } from "hono/client";
+import { Resource } from "sst";
+import Layout from "../layouts/Layout.astro";
+import type { AppType } from "../../packages/functions/src/api/index";
+
+const api = Resource.Api.url;
+const client = hc<AppType>(api);
+
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const url = data.get("url");
+        if (!url) return;
+        await client.scrape.$post({
+            form: {
+                url,
+            },
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+---
+
+<Layout title="Allergen">
+    <main>
+        <h1>Allergen</h1>
+        <form class="form" method="POST">
+            <div class="inputs">
+                <label for="url">URL: </label>
+                <input type="text" name="url" id="url" />
+            </div>
+            <input type="submit" value="submit" class="button" />
+        </form>
+    </main>
+</Layout>
+
+<style>
+    body {
+        background-color: #f4f4f2; /* Light grey background for better contrast */
+        font-family: Arial, sans-serif; /* Consistent and readable font */
+    }
+
+    main {
+        margin: 2rem auto; /* Centers the main content and adds spacing around */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
+        max-width: 800px; /* Maximum width of the main content */
+        background: #ffffff; /* White background for the main content area */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
+        border-radius: 8px; /* Rounded corners for modern appearance */
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Adjusted for better readability */
+        color: #333333; /* Dark gray for better readability */
+        text-align: center;
+        margin-bottom: 0.5em; /* Reduced bottom margin */
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column; /* Stacks the form elements vertically */
+        align-items: center;
+        gap: 1rem; /* Adds space between form elements */
+        width: 100%;
+        max-width: 500px; /* Sets maximum width for the form to prevent over-stretching */
+    }
+
+    .inputs {
+        width: 100%; /* Full width inputs within the form */
+        display: flex;
+        flex-direction: column; /* Labels above inputs */
+        align-items: flex-start;
+    }
+
+    label {
+        margin-bottom: 0.5rem;
+        font-weight: bold; /* Makes labels more prominent */
+    }
+
+    input[type="text"] {
+        width: calc(
+            100% - 20px
+        ); /* Full width minus padding for the text input */
+        padding: 10px;
+        border: 2px solid #ccc; /* Subtle border for the input */
+        border-radius: 4px; /* Rounded corners for the input */
+        box-sizing: border-box; /* Includes padding and border in the width */
+    }
+
+    input[type="submit"] {
+        background-color: #0056b3; /* Blue background for the submit button */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    input[type="submit"]:hover {
+        background-color: #003580; /* Darker blue when hovered */
+    }
+</style>
