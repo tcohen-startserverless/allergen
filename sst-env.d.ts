@@ -3,27 +3,27 @@
 import "sst"
 declare module "sst" {
   export interface Resource {
-    "Api": {
-      "name": string
-      "type": "sst.aws.Function"
-      "url": string
+    Api: {
+      name: string
+      type: "sst.aws.Function"
+      url: string
     }
-    "Bus": {
-      "arn": string
-      "name": string
-      "type": "sst.aws.Bus"
+    Bus: {
+      arn: string
+      name: string
+      type: "sst.aws.Bus"
     }
-    "Firecrawl": {
-      "type": "sst.sst.Secret"
-      "value": string
+    Firecrawl: {
+      type: "sst.sst.Secret"
+      value: string
     }
-    "Site": {
-      "type": "sst.aws.Astro"
-      "url": string
+    Site: {
+      type: "sst.aws.Astro"
+      url: string
     }
-    "Table": {
-      "name": string
-      "type": "sst.aws.Dynamo"
+    Table: {
+      name: string
+      type: "sst.aws.Dynamo"
     }
   }
 }

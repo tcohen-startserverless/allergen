@@ -6,4 +6,5 @@ export const scrapeUrl = async (params: { url: string }) => {
   const app = new FirecrawlApp({ apiKey: Resource.Firecrawl.value });
   const scrapedData = await app.scrapeUrl(url.href);
   console.log({ scrapedData });
+  return scrapedData;
 };

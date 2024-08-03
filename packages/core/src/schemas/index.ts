@@ -1,2 +1,1 @@
-export * from "./site";
-export * from "./bus";
+export * from "./restaurant";

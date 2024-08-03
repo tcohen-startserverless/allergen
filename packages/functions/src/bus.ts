@@ -1,19 +1,17 @@
 import { bus } from "sst/aws/bus";
-import { NewSiteEvent } from "@core/schemas";
+import { Restaurant } from "@core/schemas";
+import { scrapeUrl } from "@core/scrape";
 
-export const handler = bus.subscriber([Order.Event.Created, User.Events.Updated], async (event) => {
-  console.log(event.type, event.properties, event.metadata);
-  switch (event.type) {
-    case "order.created": {
-      await Shippo.createShipment(event.properties.orderID);
-      await Template.sendOrderConfirmation(event.properties.orderID);
-      await EmailOctopus.addToCustomersList(event.properties.orderID);
-      break;
+export const handler = bus.subscriber(
+  [Restaurant.Event.Created],
+  async (event) => {
+    console.log(event.type, event.properties, event.metadata);
+    switch (event.type) {
+      case "site.created": {
+        const url = `${event.properties.domain}${event.properties.page}`;
+        await scrapeUrl({ url });
+        break;
+      }
     }
-    case "user.updated": {
-      await Stripe.syncUser(event.properties.userID);
-      await EmailOctopus.addToMarketingList(event.properties.userID);
-      break;
-    }
-  }
-});
+  },
+);
