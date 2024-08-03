@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
-import { createPage } from "../../../core/src/page";
+import { createSite } from "@core/site";
+import { SiteInputSchema } from "@core/schemas";
 import { vValidator } from "@hono/valibot-validator";
-import { PageInputSchema } from "../../../core/src/schemas";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 
 type Bindings = {
@@ -12,11 +12,11 @@ type Bindings = {
 
 const app = new Hono<{ Bindings: Bindings }>().post(
   "/scrape",
-  vValidator("form", PageInputSchema),
+  vValidator("form", SiteInputSchema),
   async (c) => {
     const data = c.req.valid("form");
-    const page = await createPage(data);
-    return c.text(`Hello, world! `);
+    const site = await createSite(data);
+    return c.json(site);
   },
 );
 

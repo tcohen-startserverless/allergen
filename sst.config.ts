@@ -10,7 +10,7 @@ export default $config({
       providers: {
         aws: {
           region: "us-west-2",
-          profile: "dev",
+          profile: "start-serverless-dev",
         },
       },
     };
@@ -24,13 +24,11 @@ export default $config({
         sk: "string",
       },
       primaryIndex: { hashKey: "pk", rangeKey: "sk" },
-      stream: "new-image",
     });
-    table.subscribe("packages/functions/src/bus/index.handler");
 
     const api = new sst.aws.Function("Api", {
-      handler: "packages/functions/src/api/index.handler",
-      link: [table],
+      handler: "packages/functions/src/api.handler",
+      link: [table, bus],
       url: true,
     });
 
@@ -38,18 +36,10 @@ export default $config({
       link: [api],
     });
 
-    bus.subscribe(
-      {
-        handler: "packages/functions/src/bus/index.handler",
-        link: [table, firecrawl],
-      },
-      {
-        pattern: {
-          source: ["table"],
-          detailType: ["page"],
-        },
-      },
-    );
+    bus.subscribe({
+      handler: "packages/functions/src/bus.handler",
+      link: [table, firecrawl],
+    });
     return {
       api: api.url,
       site: site.url,
