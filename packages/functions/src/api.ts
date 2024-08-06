@@ -11,10 +11,8 @@ type Bindings = {
   context: LambdaContext;
 };
 
-const app = new Hono<{ Bindings: Bindings }>();
-app.use(logger());
-
-app
+const app = new Hono<{ Bindings: Bindings }>()
+  .use(logger())
   .get("/search", vValidator("query", Restaurant.Query), async (c) => {
     const data = c.req.valid("query");
     console.log({ data });

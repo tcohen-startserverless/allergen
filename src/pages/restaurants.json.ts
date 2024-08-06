@@ -23,7 +23,7 @@ const client = hc<AppType>(api);
 //   });
 // }
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
   const url = data.get("url");
   if (!url) return new Response("Missing url", { status: 400 });

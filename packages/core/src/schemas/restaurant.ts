@@ -12,18 +12,18 @@ const Input = v.object({
   url: v.string("Missing url"),
 });
 
-const Created = defineEvent(
-  "site.created",
-  v.object({
-    domain: v.string("Missing domain"),
-    page: v.string("Missing page"),
-  }),
-);
+const Created = v.object({
+  domain: v.string("Missing domain"),
+  page: v.string("Missing page"),
+});
+
+const CreatedEvent = defineEvent("site.created", Created);
 
 export const Restaurant = {
   Input: Input,
+  Created,
   Event: {
-    Created,
+    CreatedEvent,
   },
   Query,
 };
