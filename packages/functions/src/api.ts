@@ -12,6 +12,8 @@ type Bindings = {
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
+app.use(logger());
+
 app
   .get("/search", vValidator("query", Restaurant.Query), async (c) => {
     const data = c.req.valid("query");

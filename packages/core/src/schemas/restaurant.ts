@@ -30,4 +30,5 @@ export const Restaurant = {
 
 export type RestaurantType = {
   Input: v.InferInput<typeof Input>;
+  Created: v.InferInput<typeof Created>;
 };

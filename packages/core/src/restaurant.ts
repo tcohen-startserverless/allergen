@@ -7,14 +7,15 @@ import type { RestaurantType } from "./schemas";
 export const createRestaurant = async (params: RestaurantType["Input"]) => {
   const url = new URL(params.url);
   const domain = url.hostname;
-  const name = domain.split(".")[0];
+  const name = domain.split(".")[1];
   if (!name) throw new Error("Invalid domain");
   const data = {
     domain: domain,
     page: url.pathname,
     name: name,
   };
-  const response = await RestaurantEntity.create(data).go();
+  // const response = await RestaurantEntity.create(data).go();
+  const response = await RestaurantEntity.upsert(data).go({ response: "all_new" });
   const site = response.data;
   console.log("saved to database");
   await bus.publish(Resource.Bus, Restaurant.Event.Created, site);

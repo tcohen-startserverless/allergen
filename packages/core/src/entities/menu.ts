@@ -5,18 +5,14 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 const client = new DynamoDBClient({});
 
 const table = Resource.Table.name;
-export const RestaurantEntity = new Entity(
+export const MenuEntity = new Entity(
   {
     model: {
-      entity: "restaurant",
+      entity: "menu",
       version: "1",
       service: "allergen",
     },
     attributes: {
-      name: {
-        type: "string",
-        required: true,
-      },
       domain: {
         type: "string",
         required: true,
@@ -25,8 +21,9 @@ export const RestaurantEntity = new Entity(
         type: "string",
         required: true,
       },
-      text: {
+      data: {
         type: "string",
+        required: true,
       },
       createdAt: {
         type: "number",
