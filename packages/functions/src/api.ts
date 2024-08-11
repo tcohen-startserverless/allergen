@@ -16,15 +16,17 @@ const app = new Hono<{ Bindings: Bindings }>()
   .get("/search", vValidator("query", Restaurant.Query), async (c) => {
     const data = c.req.valid("query");
     console.log({ data });
-    // const site = await createSite(data);
-    // return c.json(site);
     return c.text("Hello, world!");
   })
-  .post("/site/create", vValidator("form", Restaurant.Input), async (c) => {
-    const data = c.req.valid("form");
-    const site = await createRestaurant(data);
-    return c.json(site);
-  });
+  .post(
+    "/restaurant/create",
+    vValidator("form", Restaurant.Input),
+    async (c) => {
+      const data = c.req.valid("form");
+      const site = await createRestaurant(data);
+      return c.json(site);
+    },
+  );
 
 export type AppType = typeof app;
 

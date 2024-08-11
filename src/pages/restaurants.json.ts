@@ -6,7 +6,7 @@ import type { AppType } from "@functions/api";
 const api = Resource.Api.url;
 const client = hc<AppType>(api);
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
   const data = await request.formData();
   const url = data.get("url");
   if (!url) return new Response("Missing url", { status: 400 });
@@ -15,8 +15,8 @@ export const POST: APIRoute = async ({ request }) => {
       url,
     },
   });
-  const site = await res.json();
-  console.log({ site });
-  // return new redirect();
-  return new Response(JSON.stringify(site));
+  const restaurant = await res.json();
+  console.log({ restaurant });
+  return redirect(`/restaurant/${restaurant.name}`);
+  // return new Response(JSON.stringify(site));
 };

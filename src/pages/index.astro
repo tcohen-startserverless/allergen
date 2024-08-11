@@ -4,15 +4,8 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Allergen">
     <main>
-        <iframe name="dummyframe" id="dummyframe" style="display: none;"
-        ></iframe>
         <h1>Allergen</h1>
-        <form
-            class="form"
-            method="POST"
-            action="/restaurants.json"
-            target="dummyframe"
-        >
+        <form class="form" method="POST" action="/restaurants.json">
             <div class="inputs">
                 <label for="url">URL: </label>
                 <input type="text" name="url" id="url" />
@@ -24,72 +17,72 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
     body {
-        background-color: #f4f4f2; /* Light grey background for better contrast */
-        font-family: Arial, sans-serif; /* Consistent and readable font */
+        background-color: #f4f4f2;/
+        font-family: Arial, sans-serif;
     }
 
     main {
-        margin: 2rem auto; /* Centers the main content and adds spacing around */
+        margin: 2rem auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 1rem;
         width: 100%;
-        max-width: 800px; /* Maximum width of the main content */
-        background: #ffffff; /* White background for the main content area */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
-        border-radius: 8px; /* Rounded corners for modern appearance */
+        max-width: 800px;
+        background: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
     }
 
     h1 {
-        font-size: 2.5rem; /* Adjusted for better readability */
-        color: #333333; /* Dark gray for better readability */
+        font-size: 2.5rem;
+        color: #333333;
         text-align: center;
-        margin-bottom: 0.5em; /* Reduced bottom margin */
+        margin-bottom: 0.5em;
     }
 
     .form {
         display: flex;
-        flex-direction: column; /* Stacks the form elements vertically */
+        flex-direction: column;
         align-items: center;
-        gap: 1rem; /* Adds space between form elements */
+        gap: 1rem;
         width: 100%;
-        max-width: 500px; /* Sets maximum width for the form to prevent over-stretching */
+        max-width: 500px;
     }
 
     .inputs {
-        width: 100%; /* Full width inputs within the form */
+        width: 100%;
         display: flex;
-        flex-direction: column; /* Labels above inputs */
+        flex-direction: column;
         align-items: flex-start;
     }
 
     label {
         margin-bottom: 0.5rem;
-        font-weight: bold; /* Makes labels more prominent */
+        font-weight: bold;
     }
 
     input[type="text"] {
         width: calc(
             100% - 20px
-        ); /* Full width minus padding for the text input */
+        );
         padding: 10px;
-        border: 2px solid #ccc; /* Subtle border for the input */
-        border-radius: 4px; /* Rounded corners for the input */
-        box-sizing: border-box; /* Includes padding and border in the width */
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
     input[type="submit"] {
-        background-color: #0056b3; /* Blue background for the submit button */
+        background-color: #0056b3;
         color: white;
         border: none;
         padding: 10px 20px;
         border-radius: 4px;
-        cursor: pointer; /* Pointer cursor on hover */
-        transition: background-color 0.3s; /* Smooth transition for hover effect */
+        cursor: pointer;
+        transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover {
-        background-color: #003580; /* Darker blue when hovered */
+        background-color: #003580;
     }
 </style>

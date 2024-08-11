@@ -1,17 +1,17 @@
 ---
+import { Resource } from "sst";
+import { hc } from "hono/client";
+import type { AppType } from "@functions/api";
 import Layout from "../../layouts/Layout.astro";
+
+const api = Resource.Api.url;
+const client = hc<AppType>(api);
+// const restaurant = client.restaurant.create.$post()
 ---
 
 <Layout title="Allergen">
     <main>
         <h1>Allergen</h1>
-        <form class="form" method="POST" action="/restaurants.json">
-            <div class="inputs">
-                <label for="url">URL: </label>
-                <input type="text" name="url" id="url" />
-            </div>
-            <input type="submit" value="submit" class="button" />
-        </form>
     </main>
 </Layout>
 
