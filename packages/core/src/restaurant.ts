@@ -14,12 +14,21 @@ export const createRestaurant = async (params: RestaurantType["Input"]) => {
     page: url.pathname,
     name: name,
   };
-  // const response = await RestaurantEntity.create(data).go();
-  const response = await RestaurantEntity.upsert(data).go({
+  const response = await RestaurantEntity.create(data).go({
     response: "all_new",
   });
   const site = response.data;
   console.log("saved to database");
   await bus.publish(Resource.Bus, Restaurant.Event.CreatedEvent, site);
   return site;
+};
+
+export const lookupRestaurant = async (data: RestaurantType["Lookup"]) => {
+  const response = await RestaurantEntity.query
+    .lookup({
+      id: data.id,
+      name: data.name,
+    })
+    .go();
+  return response.data;
 };

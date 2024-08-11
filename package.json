@@ -20,6 +20,7 @@
     "astro-sst": "2.42.0",
     "aws-sdk": "^2.1645.0",
     "electrodb": "^2.14.1",
+    "nanoid": "^5.0.7",
     "sst": "^3.0.19",
     "typescript": "^5.4.5",
     "valibot": "^0.35.0"

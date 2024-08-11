@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { handle } from "hono/aws-lambda";
 import { Restaurant } from "@core/schemas";
-import { createRestaurant } from "@core/restaurant";
+import * as Core from "@core/restaurant";
 import { vValidator } from "@hono/valibot-validator";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 
@@ -18,12 +18,17 @@ const app = new Hono<{ Bindings: Bindings }>()
     console.log({ data });
     return c.text("Hello, world!");
   })
+  .get("/restaurant", vValidator("query", Restaurant.Lookup), async (c) => {
+    const data = c.req.valid("query");
+    const restaurant = await Core.lookupRestaurant(data);
+    return c.json(restaurant);
+  })
   .post(
     "/restaurant/create",
     vValidator("form", Restaurant.Input),
     async (c) => {
       const data = c.req.valid("form");
-      const site = await createRestaurant(data);
+      const site = await Core.createRestaurant(data);
       return c.json(site);
     },
   );

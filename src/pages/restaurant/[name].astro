@@ -4,9 +4,21 @@ import { hc } from "hono/client";
 import type { AppType } from "@functions/api";
 import Layout from "../../layouts/Layout.astro";
 
+interface Props {
+    id: string;
+    name: string;
+}
+
+const { id, name } = Astro.params;
+if (!id || !name) return Astro.error(404, "Not Found");
 const api = Resource.Api.url;
 const client = hc<AppType>(api);
-// const restaurant = client.restaurant.create.$post()
+const restaurant = client.restaurant.$get({
+    query: {
+        id: id,
+        name: name,
+    },
+});
 ---
 
 <Layout title="Allergen">
