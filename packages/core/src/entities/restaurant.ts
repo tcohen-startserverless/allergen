@@ -14,7 +14,7 @@ export const RestaurantEntity = new Entity(
       service: "allergen",
     },
     attributes: {
-      id: {
+      restaurantId: {
         default: () => nanoid(),
         type: "string",
         required: true,
@@ -57,13 +57,14 @@ export const RestaurantEntity = new Entity(
         },
         sk: {
           field: "sk",
-          composite: ["id"],
+          composite: ["restaurantId"],
         },
       },
       lookup: {
+        index: "gsi1",
         pk: {
           field: "gsi1pk",
-          composite: ["id"],
+          composite: ["retaurantId"],
         },
         sk: {
           field: "gsi1sk",

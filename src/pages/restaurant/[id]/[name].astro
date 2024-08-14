@@ -2,7 +2,7 @@
 import { Resource } from "sst";
 import { hc } from "hono/client";
 import type { AppType } from "@functions/api";
-import Layout from "../../layouts/Layout.astro";
+import Layout from "src/layouts/Layout.astro";
 
 interface Props {
     id: string;
@@ -13,17 +13,20 @@ const { id, name } = Astro.params;
 if (!id || !name) return Astro.error(404, "Not Found");
 const api = Resource.Api.url;
 const client = hc<AppType>(api);
-const restaurant = client.restaurant.$get({
+const res = await client.restaurant.$get({
     query: {
         id: id,
         name: name,
     },
 });
+if (!res.ok) return Astro.error(404, "Not Found");
+const restaurant = await res.json();
 ---
 
 <Layout title="Allergen">
     <main>
-        <h1>Allergen</h1>
+        <h1>{restaurant.name}</h1>
+        <p>{restaurant.text}</p>
     </main>
 </Layout>
 

@@ -14,7 +14,7 @@ export const createRestaurant = async (params: RestaurantType["Input"]) => {
     page: url.pathname,
     name: name,
   };
-  const response = await RestaurantEntity.create(data).go({
+  const response = await RestaurantEntity.upsert(data).go({
     response: "all_new",
   });
   const site = response.data;
@@ -30,5 +30,6 @@ export const lookupRestaurant = async (data: RestaurantType["Lookup"]) => {
       name: data.name,
     })
     .go();
-  return response.data;
+  console.log({ data: response.data });
+  return response.data.pop();
 };

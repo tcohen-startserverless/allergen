@@ -1,4 +1,5 @@
 import { Resource } from "sst";
+import { nanoid } from "nanoid";
 import { Entity } from "electrodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
@@ -13,6 +14,15 @@ export const MenuEntity = new Entity(
       service: "allergen",
     },
     attributes: {
+      restaurantId: {
+        type: "string",
+        required: true,
+      },
+      menuId: {
+        type: "string",
+        required: true,
+        default: () => nanoid(),
+      },
       domain: {
         type: "string",
         required: true,
@@ -49,6 +59,17 @@ export const MenuEntity = new Entity(
         sk: {
           field: "sk",
           composite: ["page"],
+        },
+      },
+      lookup: {
+        index: "gsi1",
+        pk: {
+          field: "gsi1pk",
+          composite: ["retaurantId"],
+        },
+        sk: {
+          field: "gsi1sk",
+          composite: ["menuId"],
         },
       },
     },

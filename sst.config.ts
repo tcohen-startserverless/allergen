@@ -22,6 +22,14 @@ export default $config({
       fields: {
         pk: "string",
         sk: "string",
+        gsi1pk: "string",
+        gsi1sk: "string",
+      },
+      globalIndexes: {
+        gsi1: {
+          hashKey: "gsi1pk",
+          rangeKey: "gsi1sk",
+        },
       },
       primaryIndex: { hashKey: "pk", rangeKey: "sk" },
     });
