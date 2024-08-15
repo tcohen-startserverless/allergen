@@ -23,13 +23,13 @@ export const createRestaurant = async (params: RestaurantType["Input"]) => {
   return site;
 };
 
-export const lookupRestaurant = async (data: RestaurantType["Lookup"]) => {
-  const response = await RestaurantEntity.query
-    .lookup({
-      id: data.id,
-      name: data.name,
-    })
-    .go();
-  console.log({ data: response.data });
-  return response.data.pop();
-};
+// export const lookupRestaurant = async (data: RestaurantType["Lookup"]) => {
+//   const response = await RestaurantEntity.query
+//     .lookup({
+//       restaurantId: data.restaurantId,
+//       name: data.name,
+//     })
+//     .go();
+//   console.log({ data: response.data });
+//   return response.data.pop();
+// };

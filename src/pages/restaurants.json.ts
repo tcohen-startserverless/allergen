@@ -16,5 +16,5 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     },
   });
   const restaurant = await res.json();
-  return redirect(`/restaurant/${restaurant.id}/${restaurant.name}`);
+  return redirect(`/restaurant/${restaurant.restaurantId}/${restaurant.name}`);
 };

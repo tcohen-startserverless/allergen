@@ -9,8 +9,7 @@ const Query = v.object({
 });
 
 const Lookup = v.object({
-  id: v.string("Missing id"),
-  name: v.string("Missing name"),
+  restaurantId: v.string("Missing id"),
 });
 
 const Input = v.object({
@@ -20,6 +19,9 @@ const Input = v.object({
 const Created = v.object({
   domain: v.string("Missing domain"),
   page: v.string("Missing page"),
+  restaurantId: v.string("Missing id"),
+  createdAt: v.number("Missing createdAt"),
+  updatedAt: v.number("Missing updatedAt"),
 });
 
 const CreatedEvent = defineEvent("site.created", Created);

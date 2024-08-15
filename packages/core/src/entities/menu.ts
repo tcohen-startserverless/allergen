@@ -1,11 +1,7 @@
-import { Resource } from "sst";
 import { nanoid } from "nanoid";
+import { config } from "./config";
 import { Entity } from "electrodb";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-const client = new DynamoDBClient({});
-
-const table = Resource.Table.name;
 export const MenuEntity = new Entity(
   {
     model: {
@@ -63,9 +59,10 @@ export const MenuEntity = new Entity(
       },
       lookup: {
         index: "gsi1",
+        collection: "restaurant",
         pk: {
           field: "gsi1pk",
-          composite: ["retaurantId"],
+          composite: ["restaurantId"],
         },
         sk: {
           field: "gsi1sk",
@@ -74,5 +71,5 @@ export const MenuEntity = new Entity(
       },
     },
   },
-  { table, client },
+  config,
 );

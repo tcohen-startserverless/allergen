@@ -1,8 +1,9 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import * as Core from "@core/restaurant";
 import { handle } from "hono/aws-lambda";
 import { Restaurant } from "@core/schemas";
-import * as Core from "@core/restaurant";
+import { lookupRestaurant } from "@core/service";
 import { vValidator } from "@hono/valibot-validator";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
 
@@ -20,7 +21,7 @@ const app = new Hono<{ Bindings: Bindings }>()
   })
   .get("/restaurant", vValidator("query", Restaurant.Lookup), async (c) => {
     const data = c.req.valid("query");
-    const restaurant = await Core.lookupRestaurant(data);
+    const restaurant = await lookupRestaurant(data);
     return c.json(restaurant);
   })
   .post(
