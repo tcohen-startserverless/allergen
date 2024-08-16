@@ -31,6 +31,14 @@ export const MenuEntity = new Entity(
         type: "string",
         required: true,
       },
+      structuredMenu: {
+        type: "map",
+        properties: {},
+      },
+      allergenMenu: {
+        type: "map",
+        properties: {},
+      },
       createdAt: {
         type: "number",
         readOnly: true,

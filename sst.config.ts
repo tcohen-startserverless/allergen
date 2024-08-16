@@ -17,6 +17,7 @@ export default $config({
   },
   async run() {
     const firecrawl = new sst.Secret("Firecrawl");
+    const anthropic = new sst.Secret("Anthropic");
     const bus = new sst.aws.Bus("Bus");
     const table = new sst.aws.Dynamo("Table", {
       fields: {
@@ -46,7 +47,7 @@ export default $config({
 
     bus.subscribe({
       handler: "packages/functions/src/bus.handler",
-      link: [table, firecrawl],
+      link: [table, firecrawl, anthropic],
     });
     return {
       api: api.url,

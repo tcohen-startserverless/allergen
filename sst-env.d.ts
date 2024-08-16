@@ -3,6 +3,10 @@
 import "sst"
 declare module "sst" {
   export interface Resource {
+    Anthropic: {
+      type: "sst.sst.Secret"
+      value: string
+    }
     Api: {
       name: string
       type: "sst.aws.Function"

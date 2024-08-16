@@ -14,22 +14,9 @@ export const createRestaurant = async (params: RestaurantType["Input"]) => {
     page: url.pathname,
     name: name,
   };
-  const response = await RestaurantEntity.upsert(data).go({
-    response: "all_new",
-  });
+  const response = await RestaurantEntity.create(data).go();
   const site = response.data;
   console.log("saved to database");
   await bus.publish(Resource.Bus, Restaurant.Event.CreatedEvent, site);
   return site;
 };
-
-// export const lookupRestaurant = async (data: RestaurantType["Lookup"]) => {
-//   const response = await RestaurantEntity.query
-//     .lookup({
-//       restaurantId: data.restaurantId,
-//       name: data.name,
-//     })
-//     .go();
-//   console.log({ data: response.data });
-//   return response.data.pop();
-// };

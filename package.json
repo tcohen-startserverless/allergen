@@ -11,6 +11,7 @@
     "start": "astro dev"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.26.1",
     "@astrojs/check": "^0.9.1",
     "@aws-sdk/client-eventbridge": "^3.623.0",
     "@hono/valibot-validator": "^0.3.0",
