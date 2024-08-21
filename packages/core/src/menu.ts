@@ -1,6 +1,6 @@
 import { scrapeUrl } from "./scrape";
 import { MenuEntity } from "./entities/menu";
-import type { RestaurantType, MenuType } from "./schemas";
+import type { RestaurantType } from "./schemas";
 
 export const addMenuData = async (data: RestaurantType["Created"]) => {
   const url = `https://${data.domain}${data.page}`;
@@ -11,11 +11,10 @@ export const addMenuData = async (data: RestaurantType["Created"]) => {
   }
   const scrapedData = await scrapeUrl({ url });
   console.log("saving menu");
-  const record = await MenuEntity.upsert({
+  const menuResponse = await MenuEntity.create({
     ...data,
     data: JSON.stringify(scrapedData),
   }).go();
-  return record;
+  const menu = menuResponse.data;
+  return menu;
 };
-
-export const structureMenu = async (data: MenuType["Created"]) => {};

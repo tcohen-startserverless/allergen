@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "allergen",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -17,11 +17,12 @@
     "@hono/valibot-validator": "^0.3.0",
     "@mendable/firecrawl-js": "^0.0.26",
     "@types/aws-lambda": "^8.10.140",
-    "astro": "^4.13.1",
+    "astro": "^4.14.3",
     "astro-sst": "2.42.0",
     "aws-sdk": "^2.1645.0",
     "electrodb": "^2.14.1",
     "nanoid": "^5.0.7",
+    "sst": "3.0.54",
     "typescript": "^5.4.5",
     "valibot": "^0.35.0"
   }
