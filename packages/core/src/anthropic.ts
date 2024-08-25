@@ -1,5 +1,7 @@
-import { Resource } from "sst";
 import Anthropic from "@anthropic-ai/sdk";
+import { Resource } from "sst";
+import { MenuEntity } from "./entities";
+import type { MenuType } from "./schemas";
 
 const client = new Anthropic({
   apiKey: Resource.Anthropic.value,
@@ -7,22 +9,53 @@ const client = new Anthropic({
 
 const allergens = [
   "Milk",
-  // "Eggs",
   "Fish",
-  // "Crustacean shellfish",
-  // "Tree nuts",
-  // "Peanuts",
   "Wheat",
-  // "Soybeans",
-  // "Sesame",
 ];
 
-export const structreMenu = async (menu: string) => {
-  const content = `I need you to take this stringified json of sraped menu data, and organize it into a structured format. Organize it into menu items with the schema matching {name: string, price: number, description: string, ingredients: string[], accomodates: string[]}  Accomodates should be a string of dietary restrictions that the item accomodates.  JSON: ${menu} Here are a list of allergens ${allergens}`;
-  const message = await client.messages.create({
+export const structureMenu = async (menu: MenuType['Created']) => {
+  const response = await client.messages.create({
+    model: "claude-3-5-sonnet-20240620",
     max_tokens: 1024,
-    messages: [{ role: "user", content }],
-    model: "claude-3-5-sonnet-20240620	",
+    tools: [{
+      name: "structure_menu",
+      description: "Parse and structure menu data into an array of menu items",
+      input_schema: {
+        type: "object",
+        properties: {
+          menu_data: {
+            type: "string",
+            description: "Stringified JSON of scraped menu data"
+          },
+          allergens: {
+            type: "array",
+            items: { type: "string" },
+            description: "List of allergens to consider"
+          }
+        },
+        required: ["menu_data", "allergens"]
+      }
+    }],
+    tool_choice: { type: "tool", name: "structure_menu" },
+    messages: [{
+      role: "user",
+      content: `Parse and structure the following menu data. Each menu item should include name, price, description, ingredients, and accommodates fields. The "accommodates" field should list dietary restrictions the item accommodates.`,
+    }]
   });
-  return message.content;
+
+  if (response.content[0].type !== 'tool_use') {
+    throw new Error("Unexpected response from Claude");
+  }
+
+  const toolUse = response.content[0];
+
+  // Simulate tool execution
+  const structuredMenu = JSON.parse(toolUse.input.menu_data);
+
+  // Update the database with the structured menu
+  const updatedMenu = await MenuEntity.patch(menu).set({
+    structuredMenu: JSON.stringify(structuredMenu),
+  }).go({response: 'all_new'});
+
+  return updatedMenu.data;
 };

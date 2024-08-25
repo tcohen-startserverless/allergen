@@ -1,7 +1,7 @@
-import { Resource } from "sst";
-import { hc } from "hono/client";
-import type { APIRoute } from "astro";
 import type { AppType } from "@functions/api";
+import type { APIRoute } from "astro";
+import { hc } from "hono/client";
+import { Resource } from "sst";
 
 const api = Resource.Api.url;
 const client = hc<AppType>(api);
@@ -15,6 +15,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       url,
     },
   });
+  console.log({res})
   const restaurant = await res.json();
   return redirect(`/restaurant/${restaurant.restaurantId}/${restaurant.name}`);
 };
