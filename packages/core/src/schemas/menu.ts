@@ -4,6 +4,13 @@ import { ValibotValidator } from "sst/event/validator";
 
 const defineEvent = event.builder({ validator: ValibotValidator });
 
+const Keys = v.object({
+  domain: v.string("Missing domain"),
+  page: v.string("Missing page"),
+  restaurantId: v.string("Missing restaurantId"),
+  menuId: v.string("Missing menuId"),
+});
+
 const Created = v.object({
   domain: v.string("Missing domain"),
   page: v.string("Missing page"),
@@ -17,6 +24,7 @@ const Created = v.object({
 const CreatedEvent = defineEvent("menu.created", Created);
 
 export const Menu = {
+  Keys,
   Created,
   Event: {
     CreatedEvent,
@@ -25,4 +33,5 @@ export const Menu = {
 
 export type MenuType = {
   Created: v.InferInput<typeof Created>;
+  Keys: v.InferInput<typeof Keys>;
 };

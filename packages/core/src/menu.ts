@@ -1,6 +1,8 @@
 import { scrapeUrl } from "./scrape";
 import { MenuEntity } from "./entities/menu";
-import type { RestaurantType } from "./schemas";
+import type { MenuType, RestaurantType } from "./schemas";
+
+export const getMenu = async (data: MenuType["Keys"]) => {};
 
 export const addMenuData = async (data: RestaurantType["Created"]) => {
   const url = `https://${data.domain}${data.page}`;
