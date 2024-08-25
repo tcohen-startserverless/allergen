@@ -1,4 +1,4 @@
-import { structreMenu } from "@core/anthropic";
+import { structureMenu } from "@core/anthropic";
 import { addMenuData } from "@core/menu";
 import { Restaurant } from "@core/schemas";
 import { bus } from "sst/aws/bus";
@@ -10,7 +10,7 @@ export const handler = bus.subscriber(
     switch (event.type) {
       case "site.created": {
         const menu = await addMenuData(event.properties);
-        const structuredMenu = await structreMenu(menu);
+        await structureMenu(menu);
         break;
       }
     }

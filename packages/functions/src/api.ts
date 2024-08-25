@@ -1,11 +1,11 @@
-import { Hono } from "hono";
-import { logger } from "hono/logger";
-import * as Core from '@core/index'
-import { handle } from "hono/aws-lambda";
+import * as Core from '@core/index';
 import * as Schema from "@core/schemas";
 import { lookupRestaurant } from "@core/service";
 import { vValidator } from "@hono/valibot-validator";
+import { Hono } from "hono";
 import type { LambdaContext, LambdaEvent } from "hono/aws-lambda";
+import { handle } from "hono/aws-lambda";
+import { logger } from "hono/logger";
 
 type Bindings = {
   event: LambdaEvent;
@@ -37,11 +37,21 @@ const app = new Hono<{ Bindings: Bindings }>()
       return c.json(site);
     },
   )
-  .post("/menu/scrape", vValidator("form", Schema.Menu.Keys) async (c) => {
+  .post("/menu/scrape", vValidator("form", Schema.Menu.Keys), async (c) => {
     const data = c.req.valid("form");
-    const menu = await Core.addMenuData(data);
-    return c.json(menu);
-  });
+    const menu = await Core.getMenu(data)
+    if (!menu) return
+    const updatedMenu= await Core.addMenuData(menu);
+    return c.json(updatedMenu);
+  })
+  .post("/menu/translate", vValidator("form", Schema.Menu.Keys), async (c) => {
+      const data = c.req.valid("form");
+      const menu = await Core.getMenu(data)
+      if (!menu) return
+      const updatedMenu= await Core.structureMenu(menu);
+      return c.json(updatedMenu);
+    });
+
 export type AppType = typeof app;
 
 export const handler = handle(app);

@@ -1,8 +1,9 @@
 ---
-import { Resource } from "sst";
-import { hc } from "hono/client";
 import type { AppType } from "@functions/api";
+import { hc } from "hono/client";
 import Layout from "src/layouts/Layout.astro";
+import { Resource } from "sst";
+import Menu from '../../../components/Menu.tsx';
 
 interface Props {
     id: string;
@@ -23,43 +24,15 @@ const results = await res.json();
 const [restaurant] = results.restaurant;
 if (!restaurant) return Astro.error(404, "Not Found");
 const menu = results.menu.pop();
+console.log({results: JSON.stringify(results)})
 ---
 
 <Layout title="Allergen">
     <main>
         <h1>{restaurant.name}</h1>
-        {
-            menu ? (
-                <p>{menu.data}</p>
-            ) : (
-                <div>
-                    <p>No menu found</p>
-                    <button scrape-menu-button>Scrape Menu</button>
-                    <button structure-menu-button>Structure Menu</button>
-                </div>
-            )
-        }
+        <Menu client:load restaurantId={restaurant.restaurantId} initialMenuData={menu?.data || null} />
     </main>
 </Layout>
-
-<script>
-    import { Resource } from "sst";
-    import { hc } from "hono/client";
-    import type { AppType } from "@functions/api";
-    const api = Resource.Api.url;
-    const client = hc<AppType>(api);
-
-    const scrapeMenu = async () => {
-        const res = await client.restaurant.$get({});
-        if (!res.ok) return;
-    };
-    const scrapeMenuButton = document.querySelector("[scrape-menu-button]");
-    if (!scrapeMenuButton) return;
-    scrapeMenuButton.addEventListener("click", scrapeMenu);
-    function structureMenu() {
-        // Trigger structure menu endpoint
-    }
-</script>
 
 <style>
     body {

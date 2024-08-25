@@ -1,5 +1,6 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
+
 export default $config({
   app(input) {
     return {
@@ -37,7 +38,7 @@ export default $config({
 
     const api = new sst.aws.Function("Api", {
       handler: "packages/functions/src/api.handler",
-      link: [table, bus],
+      link: [table, bus, anthropic],
       url: true,
     });
 
