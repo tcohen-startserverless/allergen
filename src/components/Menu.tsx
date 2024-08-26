@@ -9,8 +9,9 @@ type MenuProps = {
 };
 
 export default function Menu(props: MenuProps) {
-  const [menuData, setMenuData] = createSignal(props.initialMenuData);
-  console.log("props", props);
+  const [menuData, setMenuData] = createSignal<string | null>(
+    props.initialMenuData,
+  );
   const api = Resource.Api.url;
   const client = hc<AppType>(api);
 
@@ -45,7 +46,7 @@ export default function Menu(props: MenuProps) {
           </div>
         }
       >
-        <p>{menuData()}</p>
+        <p>We got menu data</p>
         <button onClick={structureMenu}>Structure Menu</button>
       </Show>
     </div>

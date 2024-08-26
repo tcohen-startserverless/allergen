@@ -3,7 +3,7 @@ import type { AppType } from "@functions/api";
 import { hc } from "hono/client";
 import Layout from "src/layouts/Layout.astro";
 import { Resource } from "sst";
-import Menu from '../../../components/Menu.tsx';
+import Menu from "../../../components/Menu.tsx";
 
 interface Props {
     id: string;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { id, name } = Astro.params;
-if (!id || !name) return Astro.error(404, "Not Found");
+if (!id || !name) return Astro.rewrite(404, "Not Found");
 const api = Resource.Api.url;
 const client = hc<AppType>(api);
 const res = await client.restaurant.$get({
@@ -22,15 +22,19 @@ const res = await client.restaurant.$get({
 if (!res.ok) return Astro.error(404, "Not Found");
 const results = await res.json();
 const [restaurant] = results.restaurant;
-if (!restaurant) return Astro.error(404, "Not Found");
+if (!restaurant) return Astro.rewrite(404, "Not Found");
 const menu = results.menu.pop();
-console.log({results: JSON.stringify(results)})
+console.log({ results: JSON.stringify(results) });
 ---
 
 <Layout title="Allergen">
     <main>
         <h1>{restaurant.name}</h1>
-        <Menu client:load restaurantId={restaurant.restaurantId} initialMenuData={menu?.data || null} />
+        <Menu
+            client:load
+            restaurantId={restaurant.restaurantId}
+            initialMenuData={menu?.data || null}
+        />
     </main>
 </Layout>
 
