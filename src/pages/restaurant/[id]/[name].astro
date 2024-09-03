@@ -33,7 +33,8 @@ console.log({ results: JSON.stringify(results) });
         <Menu
             client:load
             restaurantId={restaurant.restaurantId}
-            initialMenuData={menu?.data || null}
+            menu={menu?.data}
+            restaurant={restaurant}
         />
     </main>
 </Layout>

@@ -2,16 +2,16 @@ import { createSignal, Show } from "solid-js";
 import type { AppType } from "@functions/api";
 import { hc } from "hono/client";
 import { Resource } from "sst";
+import type { RestaurantEntity, MenuEntity } from "@core/entities";
 
 type MenuProps = {
   restaurantId: string;
-  initialMenuData: string | null;
+  menu: MenuEntity;
+  restaurant: RestaurantEntity;
 };
 
 export default function Menu(props: MenuProps) {
-  const [menuData, setMenuData] = createSignal<string | null>(
-    props.initialMenuData,
-  );
+  const [menuData, setMenuData] = createSignal<string | undefined>(props.menu);
   const api = Resource.Api.url;
   const client = hc<AppType>(api);
 
@@ -26,13 +26,18 @@ export default function Menu(props: MenuProps) {
   };
 
   const structureMenu = async () => {
-    // const res = await client.menu.structure.$post({
-    //   json: { restaurantId: props.restaurantId },
-    // });
-    // if (res.ok) {
-    //   const structuredMenu = await res.json();
-    //   setMenuData(JSON.stringify(structuredMenu));
-    // }
+    const res = await client.menu.translate.$post({
+      form: {
+        restaurantId: props.restaurant.restaurantId,
+        domain: props.restaurant.domain,
+        menuId: props.menu.menuId,
+        page: props.menu.page,
+      },
+    });
+    if (res.ok) {
+      const structuredMenu = await res.json();
+      setMenuData(JSON.stringify(structuredMenu));
+    }
   };
 
   return (

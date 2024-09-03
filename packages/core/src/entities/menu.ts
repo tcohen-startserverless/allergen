@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { config } from "./config";
 import { Entity } from "electrodb";
+import type { EntityItem } from "electrodb";
 
 export const MenuEntity = new Entity(
   {
@@ -81,3 +82,5 @@ export const MenuEntity = new Entity(
   },
   config,
 );
+
+export type MenuEntity = EntityItem<typeof MenuEntity>;
