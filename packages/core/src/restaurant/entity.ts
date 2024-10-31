@@ -1,9 +1,9 @@
 import { nanoid } from "nanoid";
-import { config } from "./config";
+import { config } from "@core/config";
 import { Entity } from "electrodb";
 import type { EntityItem } from "electrodb";
 
-export const RestaurantEntity = new Entity(
+export const Restaurant = new Entity(
   {
     model: {
       entity: "restaurant",
@@ -68,7 +68,7 @@ export const RestaurantEntity = new Entity(
       },
     },
   },
-  config,
+  config
 );
 
-export type RestaurantEntity = EntityItem<typeof RestaurantEntity>;
+export type RestaurantEntity = EntityItem<typeof Restaurant>;

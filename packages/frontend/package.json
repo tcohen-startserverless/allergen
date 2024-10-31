@@ -1,0 +1,21 @@
+{
+  "name": "@allergen/frontend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro check && astro build",
+    "dev": "astro dev",
+    "unlock": "sst unlock",
+    "preview": "astro preview",
+    "start": "astro dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.4",
+    "astro": "4.16.7",
+    "astro-sst": "2.42.0"
+  }
+}

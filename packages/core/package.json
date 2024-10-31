@@ -1,0 +1,18 @@
+{
+  "name": "@allergen/core",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {},
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.26.1",
+    "@aws-sdk/client-eventbridge": "^3.623.0",
+    "@hono/valibot-validator": "^0.3.0",
+    "@mendable/firecrawl-js": "^0.0.26",
+    "electrodb": "^2.14.1",
+    "nanoid": "^5.0.7",
+    "valibot": "^0.35.0"
+  }
+}

@@ -1,6 +1,5 @@
 /// <reference path="./.sst/platform/config.d.ts" />
 
-
 export default $config({
   app(input) {
     return {
@@ -44,6 +43,7 @@ export default $config({
 
     const site = new sst.aws.Astro("Site", {
       link: [api],
+      path: "packages/frontend",
     });
 
     bus.subscribe({

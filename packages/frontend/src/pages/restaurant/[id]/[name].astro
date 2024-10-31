@@ -3,7 +3,6 @@ import type { AppType } from "@functions/api";
 import { hc } from "hono/client";
 import Layout from "src/layouts/Layout.astro";
 import { Resource } from "sst";
-import Menu from "../../../components/Menu.tsx";
 
 interface Props {
     id: string;
@@ -30,12 +29,12 @@ console.log({ results: JSON.stringify(results) });
 <Layout title="Allergen">
     <main>
         <h1>{restaurant.name}</h1>
-        <Menu
+        <!-- <Menu
             client:load
             restaurantId={restaurant.restaurantId}
             menu={menu?.data}
             restaurant={restaurant}
-        />
+        /> -->
     </main>
 </Layout>
 

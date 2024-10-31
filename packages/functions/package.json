@@ -1,0 +1,20 @@
+{
+  "name": "@allergen/functions",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro check && astro build",
+    "dev": "sst dev",
+    "unlock": "sst unlock",
+    "preview": "astro preview",
+    "start": "astro dev"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.140",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@hono/valibot-validator": "^0.3.0"
+  }
+}
